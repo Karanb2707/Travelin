@@ -1,5 +1,7 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
+import cors from "cors";
+import connectDB from "./config/db";
 
 dotenv.config();
 
@@ -8,10 +10,23 @@ const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 app.use(express.json());
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 app.get("/", (req: Request, res: Response) => {
-  res.json({ message: "Hello from TypeScript backend!" });
+  res.json({ message: "Hello from Travelin Backend!" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const startServer = async () => {
+  await connectDB();
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};
+
+startServer();
