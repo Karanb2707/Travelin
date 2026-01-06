@@ -12,9 +12,8 @@ export const register = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Email already exists" });
     }
 
-    const password_hash = await bcrypt.hash(password, 100);
+    const password_hash = await bcrypt.hash(password, 10);
 
-    
     const user = await User.create({
       full_name,
       email,
@@ -24,7 +23,9 @@ export const register = async (req: Request, res: Response) => {
       status: "active",
       is_verified: true,
     });
-  } catch (error) {
-    return res.status(500).json({ message: `Error - ${error}` });
+
+    return res.json({ message: "Registered successfully" });
+  } catch (err) {
+    return res.status(500).json({ message: "Server error" });
   }
 };
