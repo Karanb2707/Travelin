@@ -10,7 +10,7 @@ export const register = async (req: Request, res: Response) => {
     const email_exist = await User.findOne({ email });
     const phone_exist = await User.findOne({ phone });
 
-    // Validations for Register
+    // Registeration validations
     if (email_exist) {
       return res.status(200).json({ message: "Email already exists." });
     }
@@ -35,4 +35,22 @@ export const register = async (req: Request, res: Response) => {
   } catch (err) {
     return res.status(500).json({ message: "Server error" });
   }
+};
+
+// Login API
+export const login = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    // Login validations
+    if (!user) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    const match = await bcrypt.compare(password, user.password_hash);
+
+    
+  } catch (error) {}
 };
