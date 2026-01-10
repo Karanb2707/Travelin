@@ -69,6 +69,9 @@ export const login = async (req: Request, res: Response) => {
     //   status: "success",
     // });
 
+    user.is_logged_in = true;
+    await user.save();
+
     return res.json({
       token,
       user: {
@@ -77,6 +80,7 @@ export const login = async (req: Request, res: Response) => {
         email: user.email,
         role_id: user.role_id,
         role: user.role_id === 1 ? "Admin" : "Passenger",
+        is_logged_in: user.is_logged_in,
       },
       message: "Login successfully",
     });
@@ -93,7 +97,7 @@ export const me = async (req: any, res: any) => {
     const userId = req.user.id;
 
     const user = await User.findById(userId).select(
-      "_id full_name email phone role_id status is_verified created_at last_login_at"
+      "_id full_name email phone role_id status is_verified is_logged_in created_at last_login_at"
     );
 
     if (!user) {
@@ -106,6 +110,21 @@ export const me = async (req: any, res: any) => {
         role: user.role_id === 1 ? "Admin" : "Passenger",
       },
     });
+  } catch (err: any) {
+    return res
+      .status(500)
+      .json({ message: "Server error", error: err.message });
+  }
+};
+
+// Logout API
+export const logout = async (req: any, res: any) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await User.findByIdAndUpdate(userId, { is_logged_in: false });
+
+    return res.json({ message: "Logged out successfully" });
   } catch (err: any) {
     return res
       .status(500)

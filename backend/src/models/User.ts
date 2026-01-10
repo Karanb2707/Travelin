@@ -8,6 +8,7 @@ export interface Iuser extends mongoose.Document {
   role_id: number;
   status: string;
   is_verified: boolean;
+  is_logged_in: boolean;
   created_at: Date;
   updated_at: Date;
   last_login_at?: Date;
@@ -41,6 +42,10 @@ const UserSchema = new mongoose.Schema<Iuser>({
     default: "active",
   },
   is_verified: {
+    type: Boolean,
+    default: false,
+  },
+  is_logged_in: {
     type: Boolean,
     default: false,
   },
