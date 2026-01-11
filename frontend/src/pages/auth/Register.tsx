@@ -47,7 +47,14 @@ const Register = () => {
                 size={19}
               />
               <input
-                {...register("fullName", { required: "Full name required" })}
+                {...register("fullName", {
+                  required: "Full name required",
+                  minLength: { value: 3, message: "Name too short" },
+                  pattern: {
+                    value: /^[A-Za-z ]+$/,
+                    message: "Only letters allowed",
+                  },
+                })}
                 placeholder="Karan Bolake"
                 className={`w-full pl-10 p-2.5 rounded-lg border outline-none transition-all duration-200 ${
                   errors.fullName
@@ -76,7 +83,13 @@ const Register = () => {
                 size={19}
               />
               <input
-                {...register("email", { required: "Email required" })}
+                {...register("email", {
+                  required: "Email required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Enter a valid email",
+                  },
+                })}
                 placeholder="karan@test.com"
                 className={`w-full pl-10 p-2.5 rounded-lg border outline-none transition-all duration-200 ${
                   errors.email
@@ -105,8 +118,29 @@ const Register = () => {
                 size={18}
               />
               <input
-                // {...register("phone", { required: "Phone required" })}
-                placeholder="+91 9876543210"
+                {...register("phone", {
+                  minLength: {
+                    value: 10,
+                    message: "Phone number must be 10 digits",
+                  },
+                  maxLength: {
+                    value: 10,
+                    message: "Phone number must be 10 digits",
+                  },
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: "Only numbers allowed",
+                  },
+                })}
+                inputMode="numeric"
+                maxLength={10}
+                placeholder="9876543210"
+                onInput={(e) => {
+                  e.currentTarget.value = e.currentTarget.value.replace(
+                    /\D/g,
+                    ""
+                  );
+                }}
                 className={`w-full pl-10 p-2.5 rounded-lg border outline-none transition-all duration-200 ${
                   errors.phone
                     ? "border-red-500"
@@ -135,7 +169,13 @@ const Register = () => {
               />
               <input
                 type="password"
-                {...register("password", { required: "Password required" })}
+                {...register("password", {
+                  required: "Password required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                })}
                 placeholder="••••••••"
                 className={`w-full pl-10 p-2.5 rounded-lg border outline-none transition-all duration-200 ${
                   errors.password
