@@ -3,6 +3,7 @@ import type { RegisterPayload } from "../../types/auth.types";
 import { useRegister } from "../../hooks/useAuth";
 import type { AxiosError } from "axios";
 import { User, Mail, Phone, Lock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const {
@@ -24,12 +25,14 @@ const Register = () => {
     });
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg shadow-purple-200 overflow-hidden border border-purple-200">
         {/* Header Section */}
         <div className="bg-purple-700 p-6 text-center text-white">
-          <h2 className="text-3xl font-extrabold">Create Account</h2>
+          <h2 className="text-3xl font-extrabold">Create Your Account</h2>
           <p className="text-purple-50 mt-2">Join us today and get started</p>
         </div>
 
@@ -201,7 +204,10 @@ const Register = () => {
 
           <p className="text-center text-sm text-gray-500 mt-2">
             Already have an account?{" "}
-            <span className="text-purple-600 font-semibold cursor-pointer hover:underline">
+            <span
+              onClick={() => navigate("/login")}
+              className="text-purple-600 font-semibold cursor-pointer hover:underline"
+            >
               Log in
             </span>
           </p>
