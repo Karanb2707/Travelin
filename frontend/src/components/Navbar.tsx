@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Menu, X, User, LogOut, Settings } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import UserDropdown from "./UserDropdown";
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -32,8 +33,8 @@ function Navbar() {
         <div className="flex justify-between items-center h-18 py-4">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <h1 className="text-2xl font-extrabold tracking-tight text-purple-700 cursor-pointer">
-              Travel<span className="text-gray-900">in</span>
+            <h1 className="text-2xl font-extrabold tracking-tight text-purple-600 cursor-pointer">
+              Travel<span className="text-pink-600">in</span>
             </h1>
           </div>
 
@@ -54,31 +55,7 @@ function Navbar() {
           </div>
 
           {/* User Profile Dropdown (Desktop) */}
-          <div className="hidden md:block relative group">
-            <button className="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 transition-all">
-              <div className="w-10 h-10 rounded-full bg-purple-700 text-white flex items-center justify-center shadow-lg shadow-purple-200">
-                <User size={20} />
-              </div>
-            </button>
-
-            {/* Dropdown Menu */}
-            <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0">
-              <div className="p-2">
-                <NavLink
-                  to="/profile"
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 rounded-lg"
-                >
-                  <Settings size={16} /> Profile Settings
-                </NavLink>
-                <button
-                  onClick={logout}
-                  className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                >
-                  <LogOut size={16} /> Logout
-                </button>
-              </div>
-            </div>
-          </div>
+          <UserDropdown logout={logout} />
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
