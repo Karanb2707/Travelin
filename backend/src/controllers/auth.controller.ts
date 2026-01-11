@@ -74,14 +74,6 @@ export const login = async (req: Request, res: Response) => {
 
     return res.json({
       token,
-      user: {
-        id: user._id,
-        name: user.full_name,
-        email: user.email,
-        role_id: user.role_id,
-        role: user.role_id === 1 ? "Admin" : "Passenger",
-        is_logged_in: user.is_logged_in,
-      },
       message: "Login successfully",
     });
   } catch (err: any) {
