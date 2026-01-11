@@ -5,6 +5,10 @@ export interface RegisterPayload {
   password: string;
 }
 
+export interface RegisterResponse {
+  message: string;
+}
+
 export interface LoginPayload {
   email: string;
   password: string;

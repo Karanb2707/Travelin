@@ -5,10 +5,15 @@ import type {
   LoginPayload,
   LoginResponse,
   RegisterPayload,
+  RegisterResponse,
 } from "../types/auth.types";
 
 export const useRegister = () => {
-  return useMutation<void, AxiosError<{ message: string }>, RegisterPayload>({
+  return useMutation<
+    RegisterResponse,
+    AxiosError<{ message: string }>,
+    RegisterPayload
+  >({
     mutationFn: registerUser,
   });
 };

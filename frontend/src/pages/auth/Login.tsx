@@ -17,6 +17,9 @@ const Login = () => {
 
   const onSubmit = (data: LoginPayload) => {
     mutate(data, {
+      onSuccess: () => {
+        navigate("/");
+      },
       onError: (err: AxiosError<{ message: string }>) => {
         setError("email", {
           message: err.response?.data?.message || "Login failed",
