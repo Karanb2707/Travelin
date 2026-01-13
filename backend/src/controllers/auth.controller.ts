@@ -60,15 +60,7 @@ export const login = async (req: Request, res: Response) => {
 
     user.last_login_at = new Date();
     const token = generateToken(user._id.toString(), user.role_id);
-
-    // Auth logs (commented out because of free database)
-    // await AuthLog.create({
-    //   user_id: user._id,
-    //   role_id: user.role_id,
-    //   event: "login",
-    //   status: "success",
-    // });
-
+    
     user.is_logged_in = true;
     await user.save();
 
