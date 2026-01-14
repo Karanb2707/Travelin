@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import User from "../models/User";
 import bcrypt from "bcrypt";
-import { generateToken } from "../utils/jwt";
 import AuthLog from "../models/AuthLog";
+import { genrateAccessToken, genrateRefreshToken } from "../utils/jwt";
 
 // Register API
 export const register = async (req: Request, res: Response) => {
@@ -58,14 +58,17 @@ export const login = async (req: Request, res: Response) => {
       return res.status(200).json({ message: "Invalid email or password" });
     }
 
+    const accessToken = genrateAccessToken(user._id.toString(), user.role_id);
+    const refreshToken = genrateRefreshToken(user._id.toString());
+
     user.last_login_at = new Date();
-    const token = generateToken(user._id.toString(), user.role_id);
-    
     user.is_logged_in = true;
+    user.refresh_token = refreshToken;
     await user.save();
 
     return res.json({
-      token,
+      accessToken,
+      refreshToken,
       message: "Login successfully",
     });
   } catch (err: any) {

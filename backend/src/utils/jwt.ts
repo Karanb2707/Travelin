@@ -1,16 +1,18 @@
-import jwt, { SignOptions } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
-export const generateToken = (id: string, role_id: number) => {
-  const secret = process.env.JWT_SECRET;
-  const expiresIn = process.env.JWT_EXPIRES_IN;
+const ACCESS_SECRET = process.env.JWT_SECRET as string;
+const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET as string;
 
-  if (!secret || !expiresIn) {
-    throw new Error("JWT environment variables are not defined");
-  }
-
-  const options: SignOptions = {
-    expiresIn: expiresIn as jwt.SignOptions["expiresIn"],
-  };
-
-  return jwt.sign({ id, role_id }, secret, options);
+export const genrateAccessToken = (id: string, role_id: number) => {
+  return jwt.sign({ id, role_id }, ACCESS_SECRET, { expiresIn: "15m" });
 };
+
+export const genrateRefreshToken = (id: string) => {
+  return jwt.sign({ id }, REFRESH_SECRET, { expiresIn: "7d" });
+};
+
+export const verifyRefreshToken = (token: string) => {
+  return jwt.verify(token, REFRESH_SECRET);
+};
+
+
