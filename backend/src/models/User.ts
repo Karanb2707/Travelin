@@ -9,6 +9,7 @@ export interface Iuser extends mongoose.Document {
   status: string;
   is_verified: boolean;
   is_logged_in: boolean;
+  refresh_token: string;
   created_at: Date;
   updated_at: Date;
   last_login_at?: Date;
@@ -48,6 +49,10 @@ const UserSchema = new mongoose.Schema<Iuser>({
   is_logged_in: {
     type: Boolean,
     default: false,
+  },
+  refresh_token: {
+    type: String,
+    default: null,
   },
   created_at: {
     type: Date,
