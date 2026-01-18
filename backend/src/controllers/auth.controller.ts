@@ -104,7 +104,7 @@ export const refreshToken = async (req: Request, res: Response) => {
 
     const newAccessToken = genrateAccessToken(
       user._id.toString(),
-      user.role_id
+      user.role_id,
     );
     const newRefreshToken = genrateRefreshToken(user._id.toString());
 
@@ -128,7 +128,7 @@ export const me = async (req: any, res: any) => {
     const userId = req.user.id;
 
     const user = await User.findById(userId).select(
-      "_id full_name email phone role_id status is_verified is_logged_in created_at last_login_at"
+      "_id full_name email phone role_id status is_verified is_logged_in created_at last_login_at",
     );
 
     if (!user) {
@@ -153,7 +153,10 @@ export const logout = async (req: any, res: any) => {
   try {
     const userId = req.user.id;
 
-    const user = await User.findByIdAndUpdate(userId, { is_logged_in: false });
+    await User.findByIdAndUpdate(userId, {
+      is_logged_in: false,
+      refresh_token: null,
+    });
 
     return res.json({ message: "Logged out successfully" });
   } catch (err: any) {
