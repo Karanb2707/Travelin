@@ -1,7 +1,5 @@
 import jwt from "jsonwebtoken";
 
-const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET as string;
-
 export const genrateAccessToken = (id: string, role_id: number) => {
   return jwt.sign({ id, role_id }, process.env.JWT_SECRET as string, {
     expiresIn: "15m",
