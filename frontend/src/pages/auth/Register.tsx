@@ -197,7 +197,7 @@ const Register = () => {
 
           <button
             disabled={isPending}
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl shadow-md shadow-purple-200 transform transition-all active:scale-95 disabled:opacity-70 mt-4"
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl cursor-pointer shadow-md shadow-purple-200 transform transition-all active:scale-95 disabled:opacity-70 mt-4"
           >
             {isPending ? "Creating Account..." : "Create Account"}
           </button>
