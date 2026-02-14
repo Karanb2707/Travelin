@@ -10,6 +10,7 @@ const Register = () => {
     register,
     handleSubmit,
     setError,
+    reset,
     formState: { errors },
   } = useForm<RegisterPayload>();
 
@@ -17,6 +18,10 @@ const Register = () => {
 
   const onSubmit = (data: RegisterPayload) => {
     mutate(data, {
+      onSuccess: () => {
+        reset();
+        navigate("/login");
+      },
       onError: (err: AxiosError<{ message: string }>) => {
         setError("email", {
           message: err.response?.data?.message || "Registration failed",
@@ -141,7 +146,7 @@ const Register = () => {
                 onInput={(e) => {
                   e.currentTarget.value = e.currentTarget.value.replace(
                     /\D/g,
-                    ""
+                    "",
                   );
                 }}
                 className={`w-full pl-10 p-2.5 rounded-lg border outline-none transition-all duration-200 ${
