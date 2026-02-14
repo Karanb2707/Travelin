@@ -59,7 +59,7 @@ export const login = async (req: Request, res: Response) => {
     const match = await bcrypt.compare(password, user.password_hash);
 
     if (!match) {
-      return res.status(200).json({ message: "Invalid email or password" });
+      return res.status(400).json({ message: "Invalid email or password" });
     }
 
     const accessToken = genrateAccessToken(user._id.toString(), user.role_id);

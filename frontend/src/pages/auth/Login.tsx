@@ -10,6 +10,7 @@ const Login = () => {
     register: login,
     handleSubmit,
     setError,
+    reset,
     formState: { errors },
   } = useForm<LoginPayload>();
 
@@ -18,6 +19,7 @@ const Login = () => {
   const onSubmit = (data: LoginPayload) => {
     mutate(data, {
       onSuccess: () => {
+        reset();
         navigate("/");
       },
       onError: (err: AxiosError<{ message: string }>) => {
@@ -66,6 +68,7 @@ const Login = () => {
                     ? "border-red-500"
                     : "border-gray-300 focus:border-purple-600 focus:ring-1 focus:ring-purple-300"
                 }`}
+                disabled={isPending}
               />
             </div>
 
@@ -102,6 +105,7 @@ const Login = () => {
                     ? "border-red-500"
                     : "border-gray-300 focus:border-purple-600 focus:ring-1 focus:ring-purple-300"
                 }`}
+                disabled={isPending}
               />
             </div>
 
@@ -114,7 +118,7 @@ const Login = () => {
 
           <button
             disabled={isPending}
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl shadow-md shadow-purple-200 transform transition-all active:scale-95 disabled:opacity-70 mt-4"
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl shadow-md shadow-purple-200 transform transition-all active:scale-95 disabled:opacity-70 mt-4 cursor-pointer"
           >
             {isPending ? "Logining in..." : "Login"}
           </button>
