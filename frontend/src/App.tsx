@@ -4,7 +4,15 @@ import AppRoutes from "./routes";
 function App() {
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster
+        toastOptions={{
+          style: {
+            background: "transparent",
+            boxShadow: "none",
+            padding: 0,
+          },
+        }}
+      />{" "}
       <AppRoutes />
     </>
   );
