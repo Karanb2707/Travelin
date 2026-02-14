@@ -4,7 +4,7 @@ import { useLogin } from "../../hooks/useAuth";
 import type { AxiosError } from "axios";
 import { Mail, Lock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { showErrorToast, showSuccessToast } from "../../utils/toastHelper";
 
 const Login = () => {
   const {
@@ -18,14 +18,14 @@ const Login = () => {
 
   const onSubmit = (data: LoginPayload) => {
     mutate(data, {
-      onSuccess: (res) => {
-        toast.success(res?.message || "Login successful");
+      onSuccess: () => {
+        showSuccessToast("Login Successfull", "Welcome to your account");
         reset();
         navigate("/");
       },
       onError: (err: AxiosError<{ message: string }>) => {
-        const message = err.response?.data?.message || "Login failed";
-        toast.error(message);
+        const message = err.response?.data?.message || "";
+        showErrorToast("Login Failed", message);
       },
     });
   };

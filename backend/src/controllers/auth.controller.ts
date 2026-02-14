@@ -18,11 +18,11 @@ export const register = async (req: Request, res: Response) => {
 
     // Registeration validations
     if (emailExist) {
-      return res.status(200).json({ message: "Email already exists." });
+      return res.status(400).json({ message: "Email already exists." });
     }
 
     if (phoneExist) {
-      return res.status(200).json({ message: "Phone number already exists." });
+      return res.status(400).json({ message: "Phone number already exists." });
     }
 
     const password_hash = await bcrypt.hash(password, 10);
@@ -37,7 +37,7 @@ export const register = async (req: Request, res: Response) => {
       is_verified: true,
     });
 
-    return res.json({ message: "Registered successfully" });
+    return res.status(200).json({ message: "Registered successfully" });
   } catch (err: any) {
     return res
       .status(500)

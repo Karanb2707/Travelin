@@ -4,12 +4,12 @@ import { useRegister } from "../../hooks/useAuth";
 import type { AxiosError } from "axios";
 import { User, Mail, Phone, Lock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { showErrorToast, showSuccessToast } from "../../utils/toastHelper";
 
 const Register = () => {
   const {
     register,
     handleSubmit,
-    setError,
     reset,
     formState: { errors },
   } = useForm<RegisterPayload>();
@@ -19,13 +19,13 @@ const Register = () => {
   const onSubmit = (data: RegisterPayload) => {
     mutate(data, {
       onSuccess: () => {
+        showSuccessToast("Registration Successfulll", "You can login now");
         reset();
         navigate("/login");
       },
       onError: (err: AxiosError<{ message: string }>) => {
-        setError("email", {
-          message: err.response?.data?.message || "Registration failed",
-        });
+        const message = err.response?.data?.message || "";
+        showErrorToast("Registration Failed", message);
       },
     });
   };
