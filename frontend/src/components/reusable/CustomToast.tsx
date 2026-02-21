@@ -50,7 +50,7 @@ const CustomToast = ({ type, title, message, onClose }: CustomToastProps) => {
           {title}
         </h4>
         {message && (
-          <p className="text-[13px] text-slate-500 mt-0.5 leading-snug font-medium">
+          <p className="text-[13px] text-slate-800 leading-snug">
             {message}
           </p>
         )}
