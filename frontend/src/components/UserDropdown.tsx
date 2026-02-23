@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { User, Settings, LogOut } from "lucide-react";
+import { User, Settings, LogOut, ChevronDown } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 function UserDropdown({ logout }: { logout: () => void }) {
@@ -17,32 +17,57 @@ function UserDropdown({ logout }: { logout: () => void }) {
   }, []);
 
   return (
-    <div ref={ref} className="hidden md:block relative">
+    <div ref={ref} className="relative inline-block text-left">
+      {/* Trigger Button */}
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 transition-all"
+        className={`group flex items-center gap-2 p-1.5 rounded-full transition-all duration-200 cursor-pointer 
+          ${open ? "bg-gray-100" : "hover:bg-gray-50"}`}
       >
-        <div className="w-10 h-10 rounded-full bg-purple-700 text-white flex items-center justify-center shadow-lg shadow-purple-200">
-          <User size={20} />
+        <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 text-white flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
+          <User size={18} />
         </div>
+        <ChevronDown
+          size={14}
+          className={`text-gray-400 transition-transform duration-200 mr-1 ${open ? "rotate-180" : ""}`}
+        />
       </button>
 
+      {/* Dropdown Menu */}
       {open && (
-        <div className="absolute -right-5 mt-1 w-42 bg-purple-50 border border-gray-300 rounded-xl shadow-xl transition-all duration-200">
-          <div className="p-2">
+        <div className="absolute -right-2 mt-1 w-56 origin-top-right bg-blue-50 border border-blue-400 rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] overflow-hidden z-50 animate-in fade-in zoom-in duration-150">
+          {/* Header/Info Section */}
+          <div className="px-4 py-3 border-b border-blue-500">
+            <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+              Account
+            </p>
+            <p className="text-sm font-semibold text-gray-700 truncate">
+              user@example.com
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center gap-1 py-2 px-1">
             <NavLink
               to="/profile"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 rounded-lg"
+              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-600 hover:text-purple-700 hover:bg-purple-100 rounded-md transition-colors group"
             >
-              <Settings size={16} /> Profile Settings
+              <Settings
+                size={16}
+                className="text-gray-400 group-hover:text-purple-600"
+              />
+              <span className="font-medium">Profile Settings</span>
             </NavLink>
 
             <button
               onClick={logout}
-              className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500 hover:bg-red-100 rounded-md cursor-pointer transition-colors group"
             >
-              <LogOut size={16} /> Logout
+              <LogOut
+                size={16}
+                className="text-red-400 group-hover:text-red-600"
+              />
+              <span className="font-medium">Logout</span>
             </button>
           </div>
         </div>
