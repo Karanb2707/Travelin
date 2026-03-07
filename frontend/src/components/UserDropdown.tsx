@@ -52,7 +52,7 @@ function UserDropdown({ logout }: { logout: () => void }) {
               onClick={() => setOpen(false)}
               className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-600 hover:text-purple-700 hover:bg-purple-100 rounded-md transition-colors group"
             >
-              <Settings
+              <Settings 
                 size={16}
                 className="text-gray-400 group-hover:text-purple-600"
               />
